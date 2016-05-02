@@ -6,17 +6,29 @@
 (global-set-key [(f10)] 'bookmark-set)
 (global-set-key [(f3)] 'dired)
 
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+(defalias 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'package-archives
-          '("popkit" . "http://elpa.popkit.org/packages/"))
+(setq inhibit-startup-message t)
 
+;;------------------misc------------------
+(setq-default indent-tabs-mode 1)
+(setq default-tab-width 4)
+
+
+;;------------------elpa------------------
+
+(require 'package)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+(add-to-list 'package-archives '("popkit" . "http://elpa.popkit.org/packages/"))
 (package-initialize)
 
+;;------------------helm------------------
 (require 'helm)
 (require 'helm-config)
+
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
@@ -62,3 +74,7 @@
 
 (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
 (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+
+;;--------------windows switch-----------------------
+(global-set-key (kbd "C-x o") 'switch-window)
+(window-numbering-mode 1)
